@@ -102,7 +102,7 @@ pull:
 # END
 ################################################################################
 #
-# $Copyright: 1999-2017 Devin Teske. All rights reserved. $
-# $FrauBSD: pkgcenter-newR/Makefile 2019-11-19 00:34:22 -0800 freebsdfrau $
+# $Copyright: 1999-2019 Devin Teske. All rights reserved. $
+# $FrauBSD: pkgcenter-newR/Makefile 2019-11-19 00:34:58 -0800 freebsdfrau $
 #
 ################################################################################
