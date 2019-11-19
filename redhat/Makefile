@@ -41,12 +41,12 @@ usage:
 # Recursive Targets
 #
 
-.PHONY: all_redhat depend_redhat forcedepend_redhat
+.PHONY: all_redhat stage_redhat forcestage_redhat
 .PHONY: clean_redhat distclean_redhat
 .PHONY: pull_redhat commit_redhat
 .PHONY: tag_redhat forcetag_redhat taglist_redhat
 
-all_redhat depend_redhat forcedepend_redhat clean_redhat distclean_redhat \
+all_redhat stage_redhat forcestage_redhat clean_redhat distclean_redhat \
 pull_redhat commit_redhat tag_redhat forcetag_redhat taglist_redhat:
 	@export CONTINUE=; \
 	 ( set -- $(MFLAGS); \
@@ -60,6 +60,15 @@ pull_redhat commit_redhat tag_redhat forcetag_redhat taglist_redhat:
 	       $(MAKE) $${MAKELEVEL:+--no-print-directory} $(MFLAGS) $$target \
 	     ) || [ "$$CONTINUE" ] || exit 1; \
 	 done
+
+#
+# Maintenance targets
+#
+
+.PHONY: update
+
+update:
+	@$(PKGCENTER)/Mk/pkgcenter_update -d 5 -m skel/Makefile
 
 #
 # Git Addition Targets
@@ -81,6 +90,6 @@ pull:
 ################################################################################
 #
 # $Copyright: 1999-2017 Devin Teske. All rights reserved. $
-# $FrauBSD: pkgcenter-newR/redhat/Makefile 2019-07-21 16:40:05 -0700 freebsdfrau $
+# $FrauBSD: pkgcenter-newR/redhat/Makefile 2019-11-19 00:46:53 -0800 freebsdfrau $
 #
 ################################################################################
