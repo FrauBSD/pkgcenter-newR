@@ -41,12 +41,12 @@ usage:
 # Recursive Targets
 #
 
-.PHONY: all_freebsd depend_freebsd forcedepend_freebsd
+.PHONY: all_freebsd stage_freebsd forcestage_freebsd
 .PHONY: clean_freebsd distclean_freebsd
 .PHONY: pull_freebsd commit_freebsd
 .PHONY: tag_freebsd forcetag_freebsd taglist_freebsd
 
-all_freebsd depend_freebsd forcedepend_freebsd clean_freebsd \
+all_freebsd stage_freebsd forcestage_freebsd clean_freebsd \
 distclean_freebsd pull_freebsd commit_freebsd tag_freebsd forcetag_freebsd \
 taglist_freebsd:
 	@export CONTINUE=; \
@@ -61,6 +61,15 @@ taglist_freebsd:
 	       $(MAKE) $${MAKELEVEL:+--no-print-directory} $(MFLAGS) $$target \
 	     ) || [ "$$CONTINUE" ] || exit 1; \
 	 done
+
+#
+# Maintenance Targets
+#
+
+.PHONY: update
+
+update:
+	@: update not implemented for FreeBSD
 
 #
 # Git Addition Targets
@@ -82,6 +91,6 @@ pull:
 ################################################################################
 #
 # $Copyright: 1999-2017 Devin Teske. All rights reserved. $
-# $FrauBSD: pkgcenter-newR/freebsd/Makefile 2019-07-21 16:40:05 -0700 freebsdfrau $
+# $FrauBSD: pkgcenter-newR/freebsd/Makefile 2019-11-19 00:43:57 -0800 freebsdfrau $
 #
 ################################################################################
