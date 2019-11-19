@@ -7,6 +7,8 @@
 
 PKGCENTER = .
 
+SUBDIRS = freebsd redhat
+
 #
 # Repository Specifics
 #
@@ -42,10 +44,10 @@ usage:
 # Recursive Targets
 #
 
-.PHONY: all_all depend_all forcedepend_all clean_all distclean_all
+.PHONY: all_all stage_all forcestage_all clean_all distclean_all
 .PHONY: pull_all commit_all tag_all forcetag_all
 
-all_all depend_all forcedepend_all clean_all distclean_all \
+all_all stage_all forcestage_all clean_all distclean_all \
 pull_all commit_all tag_all forcetag_all:
 	@export CONTINUE=; \
 	 ( set -- $(MFLAGS); \
@@ -53,6 +55,27 @@ pull_all commit_all tag_all forcetag_all:
 	   false; \
 	 ) && export CONTINUE=1; \
 	 for dir in $(DIRS); do \
+	     target=$(@); target=$${target%_all}; \
+	     echo "--> Making $$target in $$dir"; \
+	     ( cd "$$dir" && \
+	       $(MAKE) $${MAKELEVEL:+--no-print-directory} $(MFLAGS) $$target \
+	     ) || [ "$$CONTINUE" ] || exit 1; \
+	 done
+
+#
+# Maintenance Targets
+#
+
+.PHONY: update_all
+
+update_all:
+	@export CONTINUE=; \
+	 ( set -- $(MFLAGS); \
+	   while getopts k flag; do [ "$$flag" = "k" ] && exit; done; \
+	   false; \
+	 ) && export CONTINUE=1; \
+	 for dir in $(SUBDIRS); do \
+	     [ -d "$$dir" ] || continue; \
 	     target=$(@); target=$${target%_all}; \
 	     echo "--> Making $$target in $$dir"; \
 	     ( cd "$$dir" && \
@@ -80,6 +103,6 @@ pull:
 ################################################################################
 #
 # $Copyright: 1999-2017 Devin Teske. All rights reserved. $
-# $FrauBSD: pkgcenter-newR/Makefile 2019-07-21 16:40:05 -0700 freebsdfrau $
+# $FrauBSD: pkgcenter-newR/Makefile 2019-11-19 00:34:22 -0800 freebsdfrau $
 #
 ################################################################################
